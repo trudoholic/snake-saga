@@ -14,13 +14,13 @@ import {
     stopGame,
 } from "../store/actions";
 import { IGlobalState } from "../store/reducers";
-// import {
-//     clearBoard,
-//     drawObject,
-//     generateRandomPosition,
-//     hasSnakeCollided,
-//     IObjectBody,
-// } from "../utils";
+import {
+    clearBoard,
+    drawObject,
+    generateRandomPosition,
+    hasSnakeCollided,
+    IObjectBody,
+} from "../utils";
 // import Instruction from "./Instructions";
 
 export interface ICanvasBoard {
@@ -29,18 +29,18 @@ export interface ICanvasBoard {
 }
 const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     // const dispatch = useDispatch();
-    // const snake1 = useSelector((state: IGlobalState) => state.snake);
+    const snake1 = useSelector((state: IGlobalState) => state.snake);
     // const disallowedDirection = useSelector(
     //     (state: IGlobalState) => state.disallowedDirection
     // );
     //
     // const [gameEnded, setGameEnded] = useState<boolean>(false);
-    // const [pos, setPos] = useState<IObjectBody>(
-    //     generateRandomPosition(width - 20, height - 20)
-    // );
+    const [pos, setPos] = useState<IObjectBody>(
+        generateRandomPosition(width - 20, height - 20)
+    );
     // const [isConsumed, setIsConsumed] = useState<boolean>(false);
-    // const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    // const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
     //
     // const moveSnake = useCallback(
     //     (dx = 0, dy = 0, ds: string) => {
@@ -122,32 +122,33 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     //         dispatch(scoreUpdates(INCREMENT_SCORE));
     //     }
     // }, [isConsumed, pos, height, width, dispatch]);
-    //
-    // useEffect(() => {
-    //     //Draw on canvas each time
-    //     setContext(canvasRef.current && canvasRef.current.getContext("2d"));
-    //     clearBoard(context);
-    //     drawObject(context, snake1, "#91C483");
-    //     drawObject(context, [pos], "#676FA3"); //Draws object randomly
-    //
-    //     //When the object is consumed
-    //     if (snake1[0].x === pos?.x && snake1[0].y === pos?.y) {
-    //         setIsConsumed(true);
-    //     }
-    //
-    //     if (
-    //         hasSnakeCollided(snake1, snake1[0]) ||
-    //         snake1[0].x >= width ||
-    //         snake1[0].x <= 0 ||
-    //         snake1[0].y <= 0 ||
-    //         snake1[0].y >= height
-    //     ) {
-    //         setGameEnded(true);
-    //         dispatch(stopGame());
-    //         window.removeEventListener("keypress", handleKeyEvents);
-    //     } else setGameEnded(false);
-    // }, [context, pos, snake1, height, width, dispatch, handleKeyEvents]);
-    //
+
+    useEffect(() => {
+        //Draw on canvas each time
+        setContext(canvasRef.current && canvasRef.current.getContext("2d"));
+        clearBoard(context);
+        drawObject(context, snake1, "#91C483");
+        drawObject(context, [pos], "#676FA3"); //Draws object randomly
+
+        //When the object is consumed
+        if (snake1[0].x === pos?.x && snake1[0].y === pos?.y) {
+            // setIsConsumed(true);
+        }
+
+        if (
+            hasSnakeCollided(snake1, snake1[0]) ||
+            snake1[0].x >= width ||
+            snake1[0].x <= 0 ||
+            snake1[0].y <= 0 ||
+            snake1[0].y >= height
+        ) {
+            // setGameEnded(true);
+            // dispatch(stopGame());
+            // window.removeEventListener("keypress", handleKeyEvents);
+        }
+        // else setGameEnded(false);
+    }, [context, pos, snake1, height, width]);//, dispatch, handleKeyEvents
+
     // useEffect(() => {
     //     window.addEventListener("keypress", handleKeyEvents);
     //
@@ -159,7 +160,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     return (
         <>
             <canvas
-                // ref={canvasRef}
+                ref={canvasRef}
                 style={{
                     // border: `3px solid ${gameEnded ? "red" : "black"}`,
                     border: "3px solid black",
