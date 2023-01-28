@@ -34,7 +34,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
         (state: IGlobalState) => state.disallowedDirection
     );
 
-    // const [gameEnded, setGameEnded] = useState<boolean>(false);
+    const [gameEnded, setGameEnded] = useState<boolean>(false);
     const [pos, setPos] = useState<IObjectBody>(
         generateRandomPosition(width - 20, height - 20)
     );
@@ -142,12 +142,12 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
             snake1[0].y <= 0 ||
             snake1[0].y >= height
         ) {
-            // setGameEnded(true);
-            // dispatch(stopGame());
-            // window.removeEventListener("keypress", handleKeyEvents);
+            setGameEnded(true);
+            dispatch(stopGame());
+            window.removeEventListener("keypress", handleKeyEvents);
         }
-        // else setGameEnded(false);
-    }, [context, pos, snake1, height, width]);//, dispatch, handleKeyEvents
+        else setGameEnded(false);
+    }, [context, pos, snake1, height, width, dispatch, handleKeyEvents]);
 
     useEffect(() => {
         window.addEventListener("keypress", handleKeyEvents);
