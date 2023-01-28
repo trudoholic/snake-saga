@@ -29,10 +29,12 @@ export function* moveSaga(params: {
     | CallEffect<true>
     > {
     while (params.type !== RESET && params.type !== STOP_GAME) {
+        //dispatches movement actions
         yield put({
             type: params.type.split("_")[1],
             payload: params.payload,
         });
+        //Dispatches SET_DIS_DIRECTION action
         switch (params.type.split("_")[1]) {
             case RIGHT:
                 yield put(setDisDirection(LEFT));
