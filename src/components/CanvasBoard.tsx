@@ -38,7 +38,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     const [pos, setPos] = useState<IObjectBody>(
         generateRandomPosition(width - 20, height - 20)
     );
-    // const [isConsumed, setIsConsumed] = useState<boolean>(false);
+    const [isConsumed, setIsConsumed] = useState<boolean>(false);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
@@ -107,21 +107,21 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     //     ); //Draws object randomly
     //     window.addEventListener("keypress", handleKeyEvents);
     // }, [context, dispatch, handleKeyEvents, height, snake1, width]);
-    //
-    // useEffect(() => {
-    //     //Generate new object
-    //     if (isConsumed) {
-    //         const posi = generateRandomPosition(width - 20, height - 20);
-    //         setPos(posi);
-    //         setIsConsumed(false);
-    //
-    //         //Increase snake size when object is consumed successfully
-    //         dispatch(increaseSnake());
-    //
-    //         //Increment the score
-    //         dispatch(scoreUpdates(INCREMENT_SCORE));
-    //     }
-    // }, [isConsumed, pos, height, width, dispatch]);
+
+    useEffect(() => {
+        //Generate new object
+        if (isConsumed) {
+            const posi = generateRandomPosition(width - 20, height - 20);
+            setPos(posi);
+            setIsConsumed(false);
+
+            //Increase snake size when object is consumed successfully
+            dispatch(increaseSnake());
+
+            //Increment the score
+            dispatch(scoreUpdates(INCREMENT_SCORE));
+        }
+    }, [isConsumed, pos, height, width, dispatch]);
 
     useEffect(() => {
         //Draw on canvas each time
@@ -132,7 +132,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
 
         //When the object is consumed
         if (snake1[0].x === pos?.x && snake1[0].y === pos?.y) {
-            // setIsConsumed(true);
+            setIsConsumed(true);
         }
 
         if (
