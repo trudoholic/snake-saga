@@ -21,7 +21,7 @@ import {
     hasSnakeCollided,
     IObjectBody,
 } from "../utils";
-// import Instruction from "./Instructions";
+import Instruction from "./Instructions";
 
 export interface ICanvasBoard {
     height: number;
@@ -94,19 +94,19 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
         [disallowedDirection, moveSnake]
     );
 
-    // const resetBoard = useCallback(() => {
-    //     window.removeEventListener("keypress", handleKeyEvents);
-    //     dispatch(resetGame());
-    //     dispatch(scoreUpdates(RESET_SCORE));
-    //     clearBoard(context);
-    //     drawObject(context, snake1, "#91C483");
-    //     drawObject(
-    //         context,
-    //         [generateRandomPosition(width - 20, height - 20)],
-    //         "#676FA3"
-    //     ); //Draws object randomly
-    //     window.addEventListener("keypress", handleKeyEvents);
-    // }, [context, dispatch, handleKeyEvents, height, snake1, width]);
+    const resetBoard = useCallback(() => {
+        window.removeEventListener("keypress", handleKeyEvents);
+        dispatch(resetGame());
+        dispatch(scoreUpdates(RESET_SCORE));
+        clearBoard(context);
+        drawObject(context, snake1, "#91C483");
+        drawObject(
+            context,
+            [generateRandomPosition(width - 20, height - 20)],
+            "#676FA3"
+        ); //Draws object randomly
+        window.addEventListener("keypress", handleKeyEvents);
+    }, [context, dispatch, handleKeyEvents, height, snake1, width]);
 
     useEffect(() => {
         //Generate new object
@@ -168,7 +168,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
                 width={width}
                 height={height}
             />
-            {/*<Instruction resetBoard={resetBoard} />*/}
+            <Instruction resetBoard={resetBoard} />
         </>
     );
 };
