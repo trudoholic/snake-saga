@@ -1,5 +1,3 @@
-// import React from 'react';
-// import './App.css';
 import { ChakraProvider, Container, Heading } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import CanvasBoard from "./components/CanvasBoard";
